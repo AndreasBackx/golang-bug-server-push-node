@@ -4,7 +4,7 @@ const fs = require('fs')
 const path = require('path')
 const mime = require('mime')
 
-function getFiles (baseDir) {
+function getFiles(baseDir) {
   const files = new Map()
 
   fs.readdirSync(baseDir).forEach((fileName) => {
@@ -13,14 +13,24 @@ function getFiles (baseDir) {
     const stat = fs.fstatSync(fileDescriptor)
     const contentType = mime.lookup(filePath)
 
-    files.set(`/${fileName}`, {
-      fileDescriptor,
-      headers: {
-        'content-length': stat.size,
-        'last-modified': stat.mtime.toUTCString(),
-        'content-type': contentType
-      }
-    })
+    if (stat.isDirectory()) {
+      const subfiles = getFiles(filePath)
+      subfiles.forEach((value, key) => {
+        // console.log("adding")
+        files.set(`/${fileName}${key}`, value)
+      })
+    } else {
+
+      files.set(`/${fileName}`, {
+        fileDescriptor,
+        headers: {
+          'content-length': stat.size,
+          'last-modified': stat.mtime.toUTCString(),
+          'content-type': contentType
+        }
+      })
+    }
+
   })
 
   return files
