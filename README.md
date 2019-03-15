@@ -1,6 +1,6 @@
-# http2-push-example
+# golang-bug-server-node
 
-Blog post: [HTTP/2 Server Push with Node.js](https://blog.risingstack.com/node-js-http-2-push)
+This code is forked from https://github.com/RisingStack/http2-push-example and edited to showcase a possible bug in Golang's Server Push implementation.
 
 ## Requirements
 
@@ -15,11 +15,7 @@ npm start
 or
 
 ```sh
-node --expose-http2 index.js
+node index.js
 ```
 
 Open: https://localhost:3000
-
-## Result
-
-![HTTP/2 push](/network.png)

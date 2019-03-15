@@ -21,7 +21,7 @@ function getFiles(baseDir) {
       })
     } else {
 
-      files.set(`/${fileName}`, {
+      files.set(`/public/${fileName}`, {
         fileDescriptor,
         headers: {
           'content-length': stat.size,
